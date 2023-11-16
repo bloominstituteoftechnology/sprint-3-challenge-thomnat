@@ -143,27 +143,27 @@
     constructor(totalProjectiles){
       this.fullyLoaded = true;
       this.safetyOn = true;
-      this.totalProjectiles = this.totalProjectiles;
-      this.projectiles = this.projectiles; 
+      this.totalProjectiles = totalProjectiles;
+      this.projectiles = totalProjectiles; 
       
     }
     
   shoot() {
-      if ((this.fullyLoaded && !this.safetyOn) || (this.projectiles > 0 && !this.safetyOn)) {
+      if (this.projectiles > 0 && !this.safetyOn) {
       this.projectiles--;
       return "Bang!"
-    } else if ((this.projectiles < 0) || (this.projectiles !== 'number') || (this.totalProjectiles <= 0)) {
+    } else if (this.projectiles === 0 || this.safetyOn) {
     return "Click!";
+    }
 }
-  }
   
   reload(number) { 
-    // let currentCapacity = number + this.projectiles
     if (typeof number !== 'number' || number <= 0) {
       return "Error reloading!";
     } 
-      number += this.projectiles
-      return `${this.projectiles} projectiles left!`;  
+     
+    this.projectiles = Math.min(this.totalProjectiles, this.projectiles + number);
+    return `${this.projectiles} projectiles left!`; 
   }
 
 
@@ -173,8 +173,6 @@
     }
   }
   
-
-
     // 👉 CHALLENGE 3 EBook
     class EBook {
       // 🧠 Constructor takes two arguments:
@@ -251,9 +249,9 @@
         }
 
           work() {
-          // if (this.ants.length === 0) {
-          //     return "No ants here. Did you work them to death?";
-          //   }
+          if (this.ants.length === 0) {
+              return "No ants here. Did you work them to death?";
+            }
 
             const deadAnts = [];
             const result = [];
@@ -284,10 +282,12 @@
               return "No ants here. Did you work them to death?"
             }
             
-            const ant = this.ants.find(ant => ant.name === name);
+            const matchingAnts = this.ants.filter((ant) => ant.name === name);
 
-            if (ant) {
-            ant.health += 15;
+            if (matchingAnts.length > 0) {
+            for (const ant of matchingAnts) {
+              ant.health += 15;
+            }
               return "Yum!"; 
             } else {
               return `${name} not found!`;
