@@ -251,9 +251,9 @@
         }
 
           work() {
-          if (this.ants.length === 0) {
-              return "No ants here. Did you work them to death?";
-            }
+          // if (this.ants.length === 0) {
+          //     return "No ants here. Did you work them to death?";
+          //   }
 
             const deadAnts = [];
             const result = [];
@@ -272,8 +272,10 @@
         
           this.ants = this.ants.filter(ant => !deadAnts.includes(ant));
         
-          return result.length > 0 ? `${this.ants.length} ants starting work!` : "No ants here. Did you work them to death?";
-        }
+            return `${antLength} ants starting work!`;
+          } 
+          
+        
     
 
           feed(name) {
